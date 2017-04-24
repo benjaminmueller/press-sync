@@ -229,6 +229,11 @@ class Press_Sync_API {
 
 		if ( $media_id = $this->media_exists( $attachment_url ) ) {
 
+			// Update media if found.
+			$attachment_args['ID'] = $media_id;
+
+			$media_id = wp_update_post( $attachment_args );
+
 			$data['id'] = $media_id;
 			$data['message'] = 'file already exists';
 
