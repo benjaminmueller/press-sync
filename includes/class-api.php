@@ -136,7 +136,7 @@ class Press_Sync_API {
 			// $this->insert_comments( $post['ID'], $post_args );
 
 			// Run any secondary commands
-			do_action( 'press_sync_insert_new_post', $post_id, $post_args );
+			do_action( 'press_sync_insert_new_post', $post['ID'], $post_args );
 
 			// Check if the post has been modified
 			if ( strtotime( $post_args['post_modified'] ) > strtotime( $post['post_modified'] ) ) {
