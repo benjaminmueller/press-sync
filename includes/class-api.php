@@ -215,13 +215,13 @@ class Press_Sync_API {
 		$attachment_args = $request->get_params();
 
 	    // Attachment URL does not exist so bail early.
-	    if ( ! array_key_exists( 'attachment_url', $attachment_args ) ) {
+	    if ( ! array_key_exists( 'guid', $attachment_args ) ) {
 	    	return ( $return_local ) ? $data : wp_send_json_error( $data );
 	    }
 
-	    $attachment_url = $attachment_args['attachment_url'];
+	    $attachment_url = $attachment_args['guid'];
 
-		unset( $attachment_args['attachment_url'] );
+		unset( $attachment_args['guid'] );
 
 		require_once( ABSPATH . '/wp-admin/includes/image.php' );
 	    require_once( ABSPATH . '/wp-admin/includes/file.php' );

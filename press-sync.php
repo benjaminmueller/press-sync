@@ -563,13 +563,11 @@ class Press_Sync {
 	 */
 	public function prepare_attachment_args_to_sync( $object_args ) {
 
-		$attachment_url = $object_args['guid'];
-
 		$args = array(
-			'post_date' => $object_args['post_date'],
-			'post_title'	=> $object_args['post_title'],
-			'post_name'	=> $object_args['post_name'],
-			'attachment_url'	=> $attachment_url,
+			'post_date'  => $object_args['post_date'],
+			'post_title' => $object_args['post_title'],
+			'post_name'	 => $object_args['post_name'],
+			'guid'		 => $object_args['guid'],
 		);
 
 		return $args;
