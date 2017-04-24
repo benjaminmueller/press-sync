@@ -407,7 +407,17 @@ class Press_Sync_API {
 			return false;
 		}
 
-		// @TODO Process the attached media from $post_args.
+		foreach ( $post_args['attached_media'] as $attachment_id => $attachment_args ) {
+
+			if ( ! empty( $attachment_args['post_parent'] ) ) {
+				$attachment_args['post_parent'] = $post_id;
+			}
+
+			$request = new WP_REST_Request( 'POST' );
+			$request->set_body_params( $attachment_args );
+
+			$attachment = $this->insert_new_media( $request, true );
+		}
 	}
 
 	public function attach_featured_image( $post_id, $post_args ) {
