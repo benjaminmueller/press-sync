@@ -123,6 +123,9 @@ class Press_Sync_API {
 
 		if ( $post = $this->post_exists( $post_args ) ) {
 
+			// Attach media
+			$this->attach_media( $post['ID'], $post_args );
+
 			// Attach featured image
 			$this->attach_featured_image( $post['ID'], $post_args );
 
@@ -183,6 +186,9 @@ class Press_Sync_API {
 			}
 
 		}
+
+		// Attach media
+		$this->attach_media( $post_id, $post_args );
 
 		// Attach featured image
 		$this->attach_featured_image( $post_id, $post_args );
@@ -394,6 +400,14 @@ class Press_Sync_API {
 
 		return $user_id;
 
+	}
+
+	public function attach_media( $post_id, $post_args ) {
+		if ( empty( $post_id ) || empty( $post_args['attached_media'] ) ) {
+			return false;
+		}
+
+		// @TODO Process the attached media from $post_args.
 	}
 
 	public function attach_featured_image( $post_id, $post_args ) {
