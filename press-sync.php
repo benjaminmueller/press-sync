@@ -152,7 +152,7 @@ class Press_Sync {
 		$dir = $dir ? $dir : trailingslashit( dirname( __FILE__ ) );
 		return $dir . $path;
 	}
-	
+
 	/**
 	 * Returns the specified press sync option
 	 *
@@ -400,6 +400,9 @@ class Press_Sync {
 
 		$object_args = apply_filters( 'press_sync_prepare_post_args_to_sync', $object_args );
 
+		// Send the post's attached media information to be imported
+		$object_args['attached_media'] = $this->get_media_attachments( $object_args['ID'] );
+
 		// Send Featured image information along to be imported
 		$object_args['featured_image'] = $this->get_featured_image( $object_args['ID'] );
 
@@ -441,6 +444,27 @@ class Press_Sync {
 
 		return $object_args;
 
+	}
+
+	/**
+	 * Get the media attachments for a WP Post
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param integer $post_id
+	 */
+	public function get_media_attachments( $post_id ) {
+		if ( empty( $post_id ) ) {
+			return false;
+		}
+
+		$media = get_attached_media( '', $post_id );
+
+		if ( empty( $media ) ) {
+			return false;
+		}
+
+		return $media;
 	}
 
 	/**
