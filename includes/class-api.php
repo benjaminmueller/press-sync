@@ -236,8 +236,14 @@ class Press_Sync_API {
 
 		}
 
+		// Allow download_url() to use an external request to retrieve featured images.
+		add_filter( 'http_request_host_is_external', array( $this, 'allow_sync_external_host' ), 10, 3 );
+
 		// 1) Download the url
 		$temp_file = download_url( $attachment_url, 5000 );
+
+		// Remove filter that allowed an external request to be made via download_url().
+		remove_filter( 'http_request_host_is_external', array( $this, 'allow_sync_external_host' ) );
 
 		$file_array['name'] = basename( $attachment_url );
         $file_array['tmp_name'] = $temp_file;
@@ -426,9 +432,6 @@ class Press_Sync_API {
 			return false;
 		}
 
-		// Allow download_url() to use an external request to retrieve featured images.
-		add_filter( 'http_request_host_is_external', array( $this, 'allow_sync_external_host' ), 10, 3 );
-
 		$request = new WP_REST_Request( 'POST' );
 		$request->set_body_params( $post_args['featured_image'] );
 
@@ -437,9 +440,6 @@ class Press_Sync_API {
 		$thumbnail_id 	= isset( $attachment['id'] ) ? $attachment['id'] : 0;
 
 		$response = set_post_thumbnail( $post_id, $thumbnail_id );
-
-		// Remove filter that allowed an external request to be made via download_url().
-		remove_filter( 'http_request_host_is_external', array( $this, 'allow_sync_external_host' ) );
 
 	}
 
